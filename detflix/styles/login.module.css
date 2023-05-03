@@ -1,0 +1,27 @@
+.logo {
+  animation: slideInDown 1s ease;
+  width: 50%;
+  height: auto;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.logoContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 50px;
+  text-align: center;
+  margin: 0 auto;
+  margin-left: 10%;
+}

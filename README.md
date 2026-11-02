@@ -1,31 +1,61 @@
 # Detflix
-Detflix est un clone de Netflix construit avec Next.js et React. Cette application permet aux utilisateurs de rechercher, découvrir et regarder des films et des séries en streaming. Avec une interface utilisateur moderne et une expérience fluide, Detflix vise à offrir une alternative open-source au célèbre service de streaming.
 
+Detflix est un clone de Netflix construit avec Next.js et React. L'objectif : permettre de rechercher, découvrir et regarder des films et des séries, avec une interface moderne.
 
-# To-do
-Fonctionnalités principales :
+## Stack
 
-Inscription et authentification des utilisateurs avec Firebase
-Recherche de films et de séries
-Listes de lecture personnalisées (à évaluer ultérieurement)
+- **Next.js 16** (Pages Router) + React 19, Tailwind CSS
+- **PostgreSQL** (driver `pg`) pour les données utilisateur
+- **NextAuth** (provider email / mot de passe, sessions JWT) et **bcrypt** pour les mots de passe
+- TMDB (The Movie Database) pour les films et séries (à venir)
 
-Technologies et services :
+## Lancer le projet
 
-Next.js pour le frontend
-Firebase pour l'authentification et le stockage des données utilisateur
-TMDB (The Movie Database) pour récupérer les informations sur les films et les séries
+Prérequis : Node.js 22.9+ et Docker (ou un PostgreSQL 13+ déjà installé).
 
-Design et UX :
+```bash
+cd detflix
+npm install
+cp .env.example .env.local   # puis remplis NEXTAUTH_SECRET (openssl rand -base64 32)
+docker compose up -d         # démarre PostgreSQL
+npm run db:migrate           # crée les tables
+npm run dev
+```
 
-S'inspirer du design de Netflix et l'améliorer si nécessaire
+Ouvre http://localhost:3000 : tu es redirigé vers `/login`. Crée un compte via `/register`.
 
+Pour un compte de test, renseigne `SEED_USER_EMAIL` et `SEED_USER_PASSWORD` dans `.env.local` puis lance `npm run db:seed`. Ne versionne jamais d'identifiants.
 
-# TEST
+## Scripts
 
-Compte Test:
-Email: test.test@test.test
-mdp: Rest974
+| Commande | Rôle |
+| --- | --- |
+| `npm run dev` | Serveur de développement |
+| `npm run build` / `npm start` | Build et serveur de production |
+| `npm run lint` | ESLint |
+| `npm run db:migrate` | Applique `db/schema.sql` |
+| `npm run db:seed` | Crée ou met à jour le compte de test |
 
-# ABOUT 
+## Structure
 
-Start le 03/05/2023
+```
+detflix/
+├── components/   composants React partagés
+├── db/           schéma SQL
+├── lib/          accès base de données, logique utilisateurs
+├── pages/        pages et routes API (auth, inscription)
+├── proxy.js      protège toutes les pages sauf login/register
+└── scripts/      migration et seed de la base
+```
+
+## To-do
+
+- [x] Inscription et authentification
+- [ ] Recherche de films et de séries (TMDB)
+- [ ] Listes de lecture personnalisées
+- [ ] Limitation du nombre de tentatives de connexion
+- [ ] Tests
+
+## À propos
+
+Démarré le 03/05/2023.

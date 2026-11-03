@@ -1,20 +1,43 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import withAuth from '../firebase/auth'
-const inter = Inter({ subsets: ['latin'] })
+import Head from 'next/head';
+import { Inter } from 'next/font/google';
+import { signOut } from 'next-auth/react';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]';
 
-function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="flex flex-col items-center justify-center">
-        <h1>Detflix</h1>
-        <p>Detflix is a Netflix clone built with Next.js and Firebase.</p>
-        <p>It is a work in progress.</p>
-      </div>
-    </main>
-  )
+const inter = Inter({ subsets: ['latin'] });
+
+export default function Home({ user }) {
+    return (
+        <>
+            <Head>
+                <title>Detflix</title>
+            </Head>
+            <main className={`flex min-h-screen flex-col items-center justify-center gap-4 p-24 ${inter.className}`}>
+                <h1 className="text-4xl font-bold">Detflix</h1>
+                <p>Bienvenue, {user.email} !</p>
+                <p>Detflix est un clone de Netflix construit avec Next.js et PostgreSQL. Projet en cours.</p>
+                <button
+                    type="button"
+                    onClick={() => signOut({ callbackUrl: '/login' })}
+                    className="rounded bg-[#e50914] px-4 py-2 text-white hover:bg-[#b70710]"
+                >
+                    Se déconnecter
+                </button>
+            </main>
+        </>
+    );
 }
 
-export default withAuth(Home);
+// Vérification côté serveur (en plus de proxy.js) : aucune page protégée n'est rendue sans session.
+export async function getServerSideProps({ req, res, resolvedUrl }) {
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/login?callbackUrl=${encodeURIComponent(resolvedUrl)}`,
+                permanent: false,
+            },
+        };
+    }
+    return { props: { user: { id: session.user.id, email: session.user.email } } };
+}

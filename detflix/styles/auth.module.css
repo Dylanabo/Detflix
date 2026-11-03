@@ -1,0 +1,134 @@
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.banner {
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.5);
+}
+
+.header {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.logo {
+  width: 60%;
+  height: auto;
+  margin: 0 auto;
+  animation: slideInDown 1s ease;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo {
+    animation: none;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.title {
+  margin-bottom: 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: #0f2027;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f2027;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  color: #2c5364;
+}
+
+.error {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  background-color: #f8d7da;
+  font-size: 14px;
+  text-align: center;
+  color: #721c24;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e50914;
+  font-size: 16px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #b70710;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.footer {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #555555;
+}
+
+.link {
+  font-weight: 600;
+  color: #e50914;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

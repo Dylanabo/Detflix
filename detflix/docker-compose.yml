@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: detflix
+      POSTGRES_PASSWORD: detflix
+      POSTGRES_DB: detflix
+    ports:
+      - "5432:5432"
+    volumes:
+      - detflix-db:/var/lib/postgresql/data
+
+volumes:
+  detflix-db:
